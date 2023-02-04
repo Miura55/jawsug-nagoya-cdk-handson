@@ -12,6 +12,13 @@ Devcontainerを使うことで自動的に開発環境を構築することが�
 3. 「Reopen in Container」をクリックします。
 4. しばらく待つと開発環境が構築されます。
 
+## APIの実行
+以下のコマンドでAPIを起動できます。
+```bash
+$ cd api
+$ uvicorn app:app --reload --host 0.0.0.0 --port 5000
+```
+
 ## AWS CLIの設定
 ### サンプルファイルからコピーする場合
 CDKを使う場合は予めAWS CLIの設定を行っておく必要があります。
