@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+ulid-py
+pydantic
+aioboto3

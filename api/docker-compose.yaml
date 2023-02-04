@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+    command: uvicorn app:app --reload --host 0.0.0.0 --port 5000
+    environment: 
+      - AWS_REGION=ap-northeast-1
+      - AWS_ACCESS_KEY_ID=foo
+      - AWS_SECRET_ACCESS_KEY=bar
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - 8000:8000
+    environment:
+      - DYNAMODB_LOCAL_CONFIG=--sharedDb
+    volumes:
+      - ./dynamodb:/data/dynamodb
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath /data/dynamodb
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - 8001:8001
+    environment: 
+      - AWS_REGION=ap-northeast-1
+      - DYNAMO_ENDPOINT=http://dynamodb:8000

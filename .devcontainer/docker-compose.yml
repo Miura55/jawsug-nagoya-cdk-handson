@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  cdk-handson:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        VARIANT: 3-bullseye
+    ports:
+      - 5000:5000
+    volumes:
+      - ..:/workspace:cached
+      - ./aws_config:/home/vscode/.aws:cached
+    environment:
+      - AWS_REGION=ap-northeast-1
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Uncomment the next line to use a non-root user for all processes.
+    user: vscode
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - 8000:8000
+    environment:
+      - DYNAMODB_LOCAL_CONFIG=--sharedDb
+    volumes:
+      - ../api/dynamodb:/data/dynamodb
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath /data/dynamodb
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - 8001:8001
+    environment: 
+      - AWS_REGION=ap-northeast-1
+      - AWS_ACCESS_KEY_ID=foo
+      - AWS_SECRET_ACCESS_KEY=bar
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+
