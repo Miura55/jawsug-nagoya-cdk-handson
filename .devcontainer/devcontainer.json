@@ -50,5 +50,5 @@
         "dockerDashComposeVersion": "v2"
     }
 	},
-	"forwardPorts": [5000, 8001]
+	"forwardPorts": [3000, 5000, 8001]
 }
