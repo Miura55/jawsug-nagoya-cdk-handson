@@ -2,9 +2,18 @@ import os
 import ulid
 import aioboto3
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from schemes import Message, Item, Result
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 session = aioboto3.Session()
 region = os.getenv("AWS_REGION", "ap-southeast-1")
 dynamo_table = os.getenv("DYNAMO_TABLE", "todo")
