@@ -15,6 +15,7 @@ services:
     environment:
       - AWS_REGION=ap-northeast-1
       - DYNAMO_ENDPOINT=http://dynamodb:8000
+      - REACT_APP_API_ENDPOINT=http://localhost:5000
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
