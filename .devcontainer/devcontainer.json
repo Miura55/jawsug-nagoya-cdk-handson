@@ -44,11 +44,11 @@
 		"ghcr.io/devcontainers/features/git:1": {
             "version": "latest"
         },
-	"docker-from-docker": {
-        "version": "latest",
-        "moby": true,
-        "dockerDashComposeVersion": "v2"
-    }
+		"docker-from-docker": {
+			"version": "latest",
+			"moby": true,
+			"dockerDashComposeVersion": "v2"
+		}
 	},
 	"forwardPorts": [3000, 5000, 8001]
 }
