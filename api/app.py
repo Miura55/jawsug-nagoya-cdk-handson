@@ -1,3 +1,9 @@
+# coding: utf-8
+'''
+How to run:
+$ uvicorn app:app --reload --host 0.0.0.0 --port 5000
+'''
+
 import os
 import ulid
 import aioboto3
