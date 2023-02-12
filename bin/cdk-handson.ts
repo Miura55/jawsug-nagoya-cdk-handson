@@ -3,6 +3,7 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { ApiStack } from '../lib/handson-api-stack';
 import { DatabaseStack } from '../lib/handson-database-stack';
+import { FrontendStack } from '../lib/handson-frontend-stack';
 
 
 const app = new cdk.App();
@@ -17,4 +18,8 @@ new DatabaseStack(app, 'CdkHandsonDatabaseStack', {
   env: { region: 'ap-northeast-1' },
   tableName: tableName,
   fargateTaskRole: apiStack.fargateTaskRole,
+});
+
+new FrontendStack(app, 'CdkHandsonFrontendStack', {
+  env: { region: 'ap-northeast-1' },
 });
