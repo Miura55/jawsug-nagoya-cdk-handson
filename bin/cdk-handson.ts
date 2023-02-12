@@ -8,7 +8,7 @@ import { DatabaseStack } from '../lib/handson-database-stack';
 const app = new cdk.App();
 const tableName = 'handson-todo-table';
 
-const fargateService = new ApiStack(app, 'CdkHandsonApiStack', {
+const apiStack = new ApiStack(app, 'CdkHandsonApiStack', {
   env: { region: 'ap-northeast-1' },
   tableName: tableName,
 });
@@ -16,5 +16,5 @@ const fargateService = new ApiStack(app, 'CdkHandsonApiStack', {
 new DatabaseStack(app, 'CdkHandsonDatabaseStack', {
   env: { region: 'ap-northeast-1' },
   tableName: tableName,
-  fargateService: fargateService.fargateService,
+  fargateService: apiStack.fargateService,
 });
