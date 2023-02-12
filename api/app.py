@@ -53,7 +53,7 @@ async def message(body: Message):
 @app.delete("/message/{id}", response_model=Result)
 async def delete_message(id: str):
     async with session.resource("dynamodb", region, endpoint_url=dynamo_endpoint) as database:
-        table = await database.Table("todo")
+        table = await database.Table(dynamo_table)
         await table.delete_item(
             Key={
                 "id": id,
