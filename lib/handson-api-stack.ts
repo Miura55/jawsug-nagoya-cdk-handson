@@ -17,7 +17,6 @@ interface ApiStackProps extends cdk.StackProps {
 
 export class ApiStack extends cdk.Stack {
   public readonly fargateTaskRole: IRole;
-  public readonly apiEndpoint: string;
 
   constructor(scope: Construct, id: string, props: ApiStackProps) {
     super(scope, id, props);
@@ -78,7 +77,6 @@ export class ApiStack extends cdk.Stack {
         allowMethods: [CorsHttpMethod.ANY],
       },
     });
-    this.apiEndpoint = api.apiEndpoint;
 
     const integration = new CfnIntegration(this, 'HttpApiIntegration', {
       apiId: api.apiId,
@@ -100,7 +98,7 @@ export class ApiStack extends cdk.Stack {
 
     // APIのエンドポイントを出力する
     new cdk.CfnOutput(this, 'ApiEndpoint', {
-      value: this.apiEndpoint,
+      value: api.apiEndpoint,
     });
   }
 }
