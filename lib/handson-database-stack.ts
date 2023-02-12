@@ -1,12 +1,12 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Table, AttributeType, BillingMode } from "aws-cdk-lib/aws-dynamodb";
-import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
+import { IRole } from "aws-cdk-lib/aws-iam";
 
 
 interface DatabaseStackProps extends cdk.StackProps {
   tableName: string;
-  fargateService: ApplicationLoadBalancedFargateService;
+  fargateTaskRole: IRole;
 }
 
 export class DatabaseStack extends cdk.Stack {
@@ -24,6 +24,6 @@ export class DatabaseStack extends cdk.Stack {
     });
 
     // FargateタスクにDynamoDBへのアクセス権限を付与する
-    table.grantFullAccess(props.fargateService.taskDefinition.taskRole);
+    table.grantFullAccess(props.fargateTaskRole);
   }
 }

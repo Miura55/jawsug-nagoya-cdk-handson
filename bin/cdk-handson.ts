@@ -16,5 +16,5 @@ const apiStack = new ApiStack(app, 'CdkHandsonApiStack', {
 new DatabaseStack(app, 'CdkHandsonDatabaseStack', {
   env: { region: 'ap-northeast-1' },
   tableName: tableName,
-  fargateService: apiStack.fargateService,
+  fargateTaskRole: apiStack.fargateTaskRole,
 });

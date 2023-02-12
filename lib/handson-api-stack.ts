@@ -8,6 +8,7 @@ import { ApplicationLoadBalancedFargateService } from 'aws-cdk-lib/aws-ecs-patte
 import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { CfnVpcLink, CfnIntegration, CfnRoute } from 'aws-cdk-lib/aws-apigatewayv2';
 import { HttpApi, CorsHttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
+import { IRole } from 'aws-cdk-lib/aws-iam';
 
 
 interface ApiStackProps extends cdk.StackProps {
@@ -15,7 +16,7 @@ interface ApiStackProps extends cdk.StackProps {
 }
 
 export class ApiStack extends cdk.Stack {
-  public readonly fargateService: ApplicationLoadBalancedFargateService;
+  public readonly fargateTaskRole: IRole;
   public readonly apiEndpoint: string;
 
   constructor(scope: Construct, id: string, props: ApiStackProps) {
@@ -60,7 +61,7 @@ export class ApiStack extends cdk.Stack {
       },
       publicLoadBalancer: true,
     });
-    this.fargateService = fargateService;
+    this.fargateTaskRole = fargateService.taskDefinition.taskRole;
 
     // VPC Link
     const httpVpcLink = new CfnVpcLink(this, 'HttpVpcLink', {
