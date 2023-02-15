@@ -1,0 +1,59 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - '**' 
+
+name: Create Release
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: false
+      - name: Create API asset
+        run: zip -r api.zip ./api
+      - name: Upload release api asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: api.zip
+          asset_name: api-asset-${{ github.ref }}.zip
+          asset_content_type: application/zip
+      - name: Create Frontend asset
+        run: |
+          touch todo-app/.env.production.local
+          zip -r todo-app.zip ./todo-app
+      - name: Upload release frontend asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: todo-app.zip
+          asset_name: todo-app-asset-${{ github.ref }}.zip
+          asset_content_type: application/zip
+      - name: Publish release
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.create_release.outputs.id }}
