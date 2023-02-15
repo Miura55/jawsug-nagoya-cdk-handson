@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Set version from tag
+        run: echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -36,7 +38,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: api.zip
-          asset_name: api-asset-${{ github.ref }}.zip
+          asset_name: api-asset-${{ env.VERSION }}.zip
           asset_content_type: application/zip
       - name: Create Frontend asset
         run: |
@@ -49,7 +51,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: todo-app.zip
-          asset_name: todo-app-asset-${{ github.ref }}.zip
+          asset_name: todo-app-asset-${{ env.VERSION }}.zip
           asset_content_type: application/zip
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
