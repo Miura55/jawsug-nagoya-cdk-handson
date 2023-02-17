@@ -14,6 +14,8 @@ export class FrontendStack extends cdk.Stack {
     const webBucket = new Bucket(this, 'WebBucket', {
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'index.html',
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
     });
 
     // CloudFrontのOrigin Access Identityを作成する
