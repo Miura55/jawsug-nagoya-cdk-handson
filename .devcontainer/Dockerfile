@@ -19,7 +19,8 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 # Install AWS CDK
 RUN npm install -g aws-cdk
 
-RUN apt-get update && apt-get upgrade -y
+# Install Vite
+RUN npm install -g vite
 
 COPY ../api/requirements.txt ./requirements.txt
 RUN pip install --upgrade pip && \
