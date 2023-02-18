@@ -38,7 +38,7 @@ export const TodoApp = () => {
     <div style={{ textAlign: "center" }}>
       <h1>Todo List</h1>
       <InputForm message={ message } onChange={ handleInputChange } onClick={ handleAdd } />
-      <TodoList todos={ todos } onClick={ handleDelete } /> 
+      <TodoList todos={ todos } onClick={ handleDelete } />
     </div>
   );
 };
