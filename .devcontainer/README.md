@@ -26,8 +26,8 @@ CDKを使う場合は予めAWS CLIの設定を行っておく必要がありま�
 `aws_config`ディレクトリがdevcontainer環境のAWS CLIの設定ファイルの保存先にマウントされており、ホストOSでサンプルファイルからコピーすると設定ファイルを用意できるのでそちらでご自身の環境に合わせて設定してください。
 
 ```bash
-$ cp aws_config/config.sample aws_config/config
-$ cp aws_config/credentials.sample aws_config/credentials
+$ cp .devcontainer/aws_config/sample.config .devcontainer/aws_config/config
+$ cp .devcontainer/aws_config/sample.credentials .devcontainer/aws_config/credentials
 ```
 
 ### コマンドで設定する場合
