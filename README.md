@@ -3,3 +3,26 @@
 
 ## テキスト
 https://miura55.github.io/cdk-handson-text
+
+## ローカル環境の構築
+### APIの実行環境
+`api` ディレクトリに移動して以下のコマンドで構築するとローカルのAPIが起動します
+
+```
+cd api
+docker compose up -d
+```
+
+### ローカル環境のDynamoDBのテーブルの作成方法
+ローカルのAPIを起動するとDynamoDB Localも起動するので、以下のコマンドでテーブルを作成できます。
+
+```
+aws dynamodb create-table \
+    --endpoint-url "http://localhost:8000" \
+    --table-name todo \
+    --attribute-definitions \
+        AttributeName=id,AttributeType=S \
+    --key-schema AttributeName=id,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+    --table-class STANDARD
+```

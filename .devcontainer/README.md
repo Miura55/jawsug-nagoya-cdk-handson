@@ -33,3 +33,20 @@ $ cp .devcontainer/aws_config/sample.credentials .devcontainer/aws_config/creden
 ### コマンドで設定する場合
 別の方法としてDevcontainer環境には、AWS CLIがインストールされているので、 `aws configure` コマンドを実行して設定を行っても構いません。
 
+## DynamoDBの作成
+ローカルの環境では予めテーブルを作成しておく必要があります。
+
+今回のアプリケーションで動かすテーブルはDevcontainer環境では以下のコマンドで作成できます(予めAWSのCLIの設定を完了しておく必要があります)
+
+```
+aws dynamodb create-table \
+    --endpoint-url "http://dynamodb:8000" \
+    --table-name todo \
+    --attribute-definitions \
+        AttributeName=id,AttributeType=S \
+    --key-schema AttributeName=id,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+    --table-class STANDARD
+```
+
+`http://localhost:8001` でDynamoDBの管理画面を開くことができるのでそこから `id` をハッシュキーにした `todo` テーブルを作成することができます
